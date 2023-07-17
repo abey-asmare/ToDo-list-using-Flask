@@ -1,0 +1,88 @@
+{% extends 'base.html' %}
+{% block title %} ToDo's {% endblock %}
+{% block styling %}
+    {{ super() }}
+    body {
+    background-image: url({{ url_for('static', filename = 'assets/stars.jpg') }} );
+    }
+
+{% endblock %}
+{% block content %}
+
+      <div class="card text-bg-dark my-5 first-card">
+        <div class="card-body">
+              {% with messages =  get_flashed_messages() %}
+                {% if messages %}
+                {% for message in messages %}
+                  <div class = "alert alert-success " style="margin:1% 25%;" role = 'alert'>
+                    {{ message }}
+                 </div>
+                            {% endfor %}
+                        {% endif %}
+                        {% endwith %}
+          <h5 class="card-title">{{current_user.name.title()}}'s ToDo List</h5>
+          <p class="card-text">
+            <div class="text-center card todo-text my-3 ">
+            {% if current_user.todo_list %}
+            {% for todo in current_user.todo_list %}
+              <div class="row py-1">
+                <div class="col-1 my-auto mx-2">
+                    <a href="{{ url_for('update_state', todo_id = todo.id) }}">
+                    {% if todo.todo_state %}
+                        <i class="fa-solid fa-check my-fa-check done"></i>
+                    {% else %}
+                        <i class="fa-solid fa-check my-fa-check not-done"></i>
+                    {% endif %}
+                </a>
+
+
+                </div>
+                <div class ="col-8">
+                  <p>{{todo.todo_title}}</p>
+                </div>
+                <div class="col-1  my-auto">
+                  <a href="{{ url_for('edit', todo_id=todo.id) }} ">
+                    <i class="fa-solid fa-pen my-fa-edit my-fa"></i>
+                  </a>
+                </div>
+
+                <div class="col-1 mx-1 my-auto">
+                  <a href="{{ url_for('delete', todo_id=todo.id) }}">
+                    <i class="fa-solid fa-trash-can my-fa-delete my-fa"></i>
+                  </a>
+                </div>
+              </div>
+            <div class="todo-column text-bg-dark"></div>
+            {% endfor %}
+            {% else %}
+
+            <div class="row">
+                <div class="col-1 my-auto mx-2">
+                </div>
+                <div class ="col-8">
+                  <p>New ToDo list added. okay more and more and more and more text</p>
+                </div>
+              </div>
+            {% endif %}
+
+         </div>
+
+
+
+
+          <form method="post" novalidate>
+               {{ forms.csrf_token }}
+            <div class="mb-3 input-group ">
+              {{ forms.todo(class="form-control form-control-sm rounded-start-pill my-input text-dark-20",  placeholder="new todo...") }}
+                  <a>
+                  {{ forms.submit(class="btn rounded-end-pill my-fa-btn my-fa  my-fa-add py-2") }}
+                </a>
+              </div>
+          </form>
+
+            </div>
+          </p>
+        </div>
+      </div>
+    </section>
+{% endblock %}

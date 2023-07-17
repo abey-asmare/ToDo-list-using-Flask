@@ -1,0 +1,70 @@
+{% extends 'base.html' %}
+{% block title %} Sign up! Be one of us. {% endblock %}
+{% block styling %}
+    {{ super() }}
+    body {
+    background-image: url({{ url_for('static', filename = 'assets/california.jpg') }} );
+    }
+   .first-card {
+    margin:10% 34%;
+     width: 35%;
+}
+form {
+margin: 5px;
+}
+
+{% endblock %}
+
+{% block content %}
+ <section>
+      <div class="card text-bg-dark py-3 px-5 first-card text-start" >
+          <h5 class="card-title mb-2 mt-2">Register: </h5>
+          {% with messages =  get_flashed_messages() %}
+                {% if messages %}
+                {% for message in messages %}
+                  <div class = "alert alert-danger " role = 'alert'>
+                    {{ message }}
+                 </div>
+                            {% endfor %}
+                        {% endif %}
+                        {% endwith %}
+
+          <form method="post"  novalidate>
+               {{ forms.csrf_token }}
+              <div>
+                    {% for error in forms.name.errors %}
+                  <div class = "alert alert-danger " role = 'alert'>
+                    {{ error }}
+                 </div>
+                  {% endfor %}
+                    <p>
+                        {{ forms.name(class="form-control form-control-sm rounded-start my-input text-dark-20",  placeholder="John Doe") }}
+                    </p>
+
+                    {% for error in forms.email.errors %}
+                  <div class = "alert alert-danger " role = 'alert'>
+                    {{ error }}
+                 </div>
+                  {% endfor %}
+                  <p>
+                        {{ forms.email(class="form-control form-control-sm rounded-start my-input text-dark-20",  placeholder="JohnDoe@gmail.com") }}
+                    </p>
+
+                    {% for error in forms.password.errors %}
+                  <div class = "alert alert-danger " role = 'alert'>
+                    {{ error }}
+                 </div>
+                  {% endfor %}
+                       <p >
+                        {{ forms.password(class="form-control form-control-sm rounded-start my-input text-dark-20",  placeholder="Password") }}
+                    </p>
+                      <a> {{ forms.submit(class="btn rounded-pill submit-button") }}</a>
+
+              </div>
+
+
+          </form>
+        </div>
+
+    </section>
+{% endblock %}

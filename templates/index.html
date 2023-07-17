@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+{% block title %} ToDo's {% endblock %}
+{% block styling %}
+    {{ super() }}
+    body {
+    background-image: url({{ url_for('static', filename = 'assets/stars.jpg') }} );
+    }
+
+{% endblock %}
+{% block content %}
+
+
+<div class="card text-bg-dark my-5 first-card">
+    <div class="card-body row">
+        <div class="col-12">
+        <h4>Please Register/Login First</h4>
+        </div>
+        <div class="col-6">
+
+ <a href="{{ url_for('register') }}" class="btn nav-link register-btn btn-lg p-2" >Register</a>
+        </div>
+        <div class="col-6">
+ <a href="{{ url_for('login') }}" class="btn nav-link login-btn btn-lg p-2" >Login</a>
+
+        </div>
+
+
+    </div>
+</div>
+{% endblock %}

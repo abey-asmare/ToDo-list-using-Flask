@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+{% block title %} ToDo's {% endblock %}
+{% block styling %}
+    {{ super() }}
+    body {
+    background-image: url({{ url_for('static', filename = 'assets/edit.jpg') }} );
+    }
+
+{% endblock %}
+{% block content %}
+
+      <div class="card text-bg-dark my-5 first-card">
+        <div class="card-body">
+              {% with messages =  get_flashed_messages() %}
+                {% if messages %}
+                {% for message in messages %}
+                  <div class = "alert alert-success " style="margin:1% 25%;" role = 'alert'>
+                    {{ message }}
+                 </div>
+                            {% endfor %}
+                        {% endif %}
+                        {% endwith %}
+          <h5 class="card-title">{{current_user.name}}'s ToDo List</h5>
+          <p class="card-text">
+            <div class="text-center card todo-text my-3 ">
+
+         </div>
+
+          <form method="post" novalidate>
+               {{ forms.csrf_token }}
+            <div class="mb-3 input-group ">
+              {{ forms.todo(class="form-control form-control-sm rounded-start-pill my-input text-dark-20",  placeholder="new todo...") }}
+                  <a>
+                  {{ forms.submit(class="btn rounded-end-pill my-fa-btn my-fa  my-fa-add py-2") }}
+                </a>
+              </div>
+          </form>
+
+            </div>
+          </p>
+        </div>
+      </div>
+    </section>
+{% endblock %}
